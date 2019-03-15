@@ -2,9 +2,12 @@
 <html>
 <head>
 	<title>GDPR Interface 1A</title>
+	<!--
 	<script src="https://wzrd.in/standalone/formdata-polyfill"></script>
 	<script src="https://wzrd.in/standalone/promise-polyfill@latest"></script>
 	<script src="https://wzrd.in/standalone/whatwg-fetch@latest"></script>
+	-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 </head>
 <body>
 	<form name="submit-to-google-sheet">
@@ -13,14 +16,26 @@
 	  <br>
 	  <input name="email" type="email" placeholder="E-mail" required>
 	  <br>
-	  Review
+	  Review to the driver
 	  <br>
-	  <textarea name="review1" placeholder="Review"></textarea>
+	  <textarea onkeyup="checkLength()" id="review1" name="review1" placeholder="Review to the driver"></textarea>
+	  <div id="textLength">0 characters</div>
 	  <br>
-	  <button type="submit">Submit</button>
+	  <button id="submitButton" type="submit" disabled>Submit</button>
 	</form>
 
 	<script>
+
+	  function checkLength() {
+	  	var reviewLength = $('#review1').val().length;
+	  	$('#textLength').text(reviewLength + ' characters');
+	  	if (reviewLength >= 200) {
+	  		$('#submitButton').prop('disabled', false);
+	  	} else {
+	  		$('#submitButton').prop('disabled', true);
+	  	}
+	  }
+
 	  const scriptURL = 'https://script.google.com/macros/s/AKfycbzpQ5RgUo8YkP80fnn1zGu6FAGI-sAUz9hKP6Mb6KT3sFemDLKS/exec'
 	  const form = document.forms['submit-to-google-sheet']
 
